@@ -1,0 +1,159 @@
+# ============================================
+# DeepShare Project .gitignore
+# Only including: device-pi, device-registration-frontend, story-server, backend
+# ============================================
+
+# ============================================
+# Exclude ALL folders except the ones we want
+# ============================================
+/*
+!/device-pi/
+!/device-registration-frontend/
+!/story-server/
+!/backend/
+!/docs/
+!/.gitignore
+!/README.md
+
+# ============================================
+# Environment Variables & Secrets
+# ============================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ============================================
+# Python
+# ============================================
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ============================================
+# Node.js
+# ============================================
+node_modules/
+.npm
+.eslintcache
+*.tsbuildinfo
+.next/
+out/
+.cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ============================================
+# Device Capture Data (device-pi folder)
+# ============================================
+# Captured images and depth data
+device-pi/capture_*.jpg
+device-pi/capture_*.png
+device-pi/depth_data_*.npz
+device-pi/depth_meta_*.json
+device-pi/ip_registration_*.json
+device-pi/retrieved_*.json
+device-pi/retrieved_*.jpg
+
+# Calibration output (user-specific, needs to be generated per camera)
+device-pi/stereo_params.npz
+
+# Calibration test images and user-captured calibration images
+device-pi/calibration/calibration_test_*.jpg
+device-pi/calibration/calibration_test_*.png
+device-pi/calibration/calibration_images/
+
+# But keep example/template files
+!device-pi/*example*
+!device-pi/*template*
+
+# ============================================
+# Backend Cache & Retrieved Data
+# ============================================
+backend/retrieved_*.json
+backend/retrieved_*.jpg
+backend/retrieved_*.png
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# Logs & Temporary Files
+# ============================================
+*.log
+logs/
+*.tmp
+*.temp
+tmp/
+temp/
+
+# ============================================
+# Build & Distribution
+# ============================================
+dist/
+build/
+*.zip
+*.tar.gz
+*.rar
+
+# ============================================
+# Testing & Coverage
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# Miscellaneous
+# ============================================
+.turbo/
+.vercel/
+*.bak
+*.orig
+*.rej
+
