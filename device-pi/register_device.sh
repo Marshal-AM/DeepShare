@@ -71,7 +71,7 @@ DEVICE_DETAILS=$(echo "$REGISTRATION_DATA" | $PYTHON_CMD -c "import sys, json; d
 DEVICE_DETAILS_ENCODED=$(echo "$DEVICE_DETAILS" | $PYTHON_CMD -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read()))")
 
 # Get the frontend URL (default to localhost, can be overridden)
-FRONTEND_URL="${FRONTEND_URL:-http://localhost:3002}"
+FRONTEND_URL="${FRONTEND_URL:-https://deep-share-five.vercel.app}"
 REGISTRATION_URL="${FRONTEND_URL}/register?address=${WALLET_ADDRESS}&details=${DEVICE_DETAILS_ENCODED}"
 
 echo -e "\n${GREEN}✓ Wallet generated successfully!${NC}"
