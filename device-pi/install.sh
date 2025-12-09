@@ -46,23 +46,12 @@ $PIP_INSTALL install --no-cache-dir \
     eth-account==0.10.0 \
     supabase==2.3.0
 
-echo -e "\n${BLUE}Step 5: Installing qrcode with PIL support...${NC}"
-$PIP_INSTALL install "qrcode[pil]==7.4.2" --no-cache-dir
-
-echo -e "\n${BLUE}Step 6: Installing OpenCV (this will take the longest)...${NC}"
+echo -e "\n${BLUE}Step 5: Installing OpenCV (this will take the longest)...${NC}"
 echo -e "${YELLOW}Installing opencv-python first...${NC}"
 $PIP_INSTALL install opencv-python==4.12.0.88 --no-cache-dir --verbose
 
-echo -e "\n${YELLOW}Installing opencv-contrib-python...${NC}"
-echo -e "${YELLOW}Note: You only need ONE of opencv-python OR opencv-contrib-python${NC}"
-echo -e "${YELLOW}opencv-contrib-python includes opencv-python, so this may conflict${NC}"
-read -p "Continue installing opencv-contrib-python? (y/n) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    $PIP_INSTALL install opencv-contrib-python==4.12.0.88 --no-cache-dir --verbose
-else
-    echo -e "${YELLOW}Skipping opencv-contrib-python installation${NC}"
-fi
+echo -e "\n${YELLOW}Note: Only opencv-python is installed.${NC}"
+echo -e "${YELLOW}If you need contrib features, install opencv-contrib-python separately.${NC}"
 
 echo -e "\n${GREEN}=== Installation Complete ===${NC}"
 echo -e "${BLUE}Verifying installations...${NC}\n"
@@ -73,7 +62,6 @@ $PYTHON_CMD -c "import cv2; print(f'✓ opencv {cv2.__version__}')" || echo -e "
 $PYTHON_CMD -c "import requests; print('✓ requests')" || echo -e "${RED}✗ requests failed${NC}"
 $PYTHON_CMD -c "import eth_account; print('✓ eth_account')" || echo -e "${RED}✗ eth_account failed${NC}"
 $PYTHON_CMD -c "import dotenv; print('✓ python-dotenv')" || echo -e "${RED}✗ python-dotenv failed${NC}"
-$PYTHON_CMD -c "import qrcode; print('✓ qrcode')" || echo -e "${RED}✗ qrcode failed${NC}"
 $PYTHON_CMD -c "import supabase; print('✓ supabase')" || echo -e "${RED}✗ supabase failed${NC}"
 
 echo -e "\n${GREEN}All packages installed successfully!${NC}"
