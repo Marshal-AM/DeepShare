@@ -8,7 +8,7 @@
 # ============================================
 /*
 !/device-pi/
-!/device-registration-frontend/
+!/frontend/
 !/story-server/
 !/backend/
 !/docs/
