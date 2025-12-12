@@ -40,6 +40,44 @@ Because real should be provable.
 
 4. You now have rights to the asset!
 
+### Testing Royalty Payments and Derivative Usage
+
+The DeepShare platform includes a comprehensive test page for simulating real-world usage scenarios and royalty payment flows for derivative assets. This allows users to understand how the revenue system works before deploying in production.
+
+1. **Navigate to Test Page**
+   - Visit the test royalty page at [https://deepshare-frontend.vercel.app/test-royalty](https://deepshare-frontend.vercel.app/test-royalty) (requires wallet connection)
+   - Ensure your MetaMask wallet is connected to the Aeneid network
+
+2. **Select a Derivative Asset You Minted**
+   - If you havent minted a derivative asset, follow the previous section's steps to mint one.
+   - The page displays all derivative assets you've minted from the marketplace
+   - Select a derivative from the grid to begin testing
+
+3. **Fetch License Terms**
+   - Click "Fetch License Terms" to load available license terms for the selected derivative
+   - Review the minting fee and revenue share percentage for each license option
+
+4. **Simulate Usage**
+   - Enter the number of license tokens to mint (default: 1)
+   - Click "Simulate Usage" to execute the royalty payment flow
+   - The system will:
+     - Mint license tokens using `mintLicenseTokens` ([`app/test-royalty/page.tsx:188`](app/test-royalty/page.tsx#L188))
+     - Pay the required minting fee in $WIP tokens
+     - Distribute revenue to the original asset owner based on the configured revenue share percentage
+     - Display transaction hashes and detailed logs of the process
+
+5. **View Transaction Details**
+   - All transactions are logged with timestamps and status
+   - Click transaction links to view on Aeneid explorer
+   - Example license token mint transaction: [View on Aeneid](https://aeneid.storyscan.io/tx/0x8f29167303f5ca0a0788382730eb5a02e4f8c1bc7a95596f7e875f62b18b4dfd)
+
+**Screenshots**:
+<!-- TODO: Add screenshot of test-royalty page with derivative selection -->
+<!-- TODO: Add screenshot of license terms display -->
+<!-- TODO: Add screenshot of usage simulation with logs -->
+
+**NOTE**: This test page demonstrates the complete royalty flow including license token minting, fee payment, and revenue distribution. All transactions occur on the Aeneid testnet using real Story Protocol contracts.
+
 ---
 
 ## Developments Actively Being Worked On
@@ -62,6 +100,7 @@ DeepShare is continuously evolving to expand device compatibility and enhance ve
 - [Problem Statement](#problem-statement)
 - [Our Solution](#solution)
 - [How it Works](#how-it-works)
+- [Revenue System](#revenue-system)
 - [System Architecture](#system-architecture)
 - [Project Flow](#project-flow)
   - [Phase 1: Device Calibration](#phase-1-device-calibration)
@@ -164,6 +203,102 @@ DeepShare operates through a six-phase pipeline that transforms physical image c
 6. **Derivative IP Minting**: Organizations browse the marketplace, select assets, and mint derivative IP assets. Users select license terms (commercial or non-commercial), the system generates derivative metadata, uploads it to IPFS, and registers the derivative on Story Protocol. The derivative links to the parent IP asset and stores licensing information in Supabase.
 
 Each phase builds upon the previous, creating an immutable chain of provenance from physical capture to blockchain registration, enabling verifiable authenticity and automated royalty distribution.
+
+---
+
+## Revenue System
+
+DeepShare implements a comprehensive revenue sharing system built on Story Protocol's royalty infrastructure. This system ensures that content creators receive fair compensation when their verified assets are used by others, creating sustainable economic incentives for contributing authentic real-world data.
+
+### How Royalty Payments Work
+
+The revenue system operates through a multi-layered flow that automatically distributes payments when derivative assets are used:
+
+1. **License Token Minting**
+   - When a user wants to utilize a derivative asset, they must mint license tokens from the parent IP asset
+   - The minting process is handled by Story Protocol's licensing module ([`app/test-royalty/page.tsx:188`](app/test-royalty/page.tsx#L188))
+   - Users pay a minting fee (in $WIP tokens) set by the original asset owner
+   - Example transaction: [License Token Mint](https://aeneid.storyscan.io/tx/0x8f29167303f5ca0a0788382730eb5a02e4f8c1bc7a95596f7e875f62b18b4dfd)
+
+2. **Revenue Distribution**
+   - When license tokens are minted, revenue is automatically distributed to the parent IP asset's royalty vault
+   - The revenue share percentage (configured during asset registration) determines how much the original creator receives
+   - Revenue is stored in $WIP (Wrapped IP) tokens, Story Protocol's native currency for royalty payments
+
+3. **Revenue Claiming**
+   - Original asset owners can claim accumulated revenue from their IP assets
+   - The claiming process uses Story Protocol's `claimAllRevenue` function ([`lib/royalty-utils.ts:48`](lib/royalty-utils.ts#L48))
+   - Revenue can be claimed for:
+     - **Standalone Assets**: Original assets without derivatives ([`lib/royalty-utils.ts:39-60`](lib/royalty-utils.ts#L39-L60))
+     - **Parent Assets with Derivatives**: Assets that have been used in derivative works ([`lib/royalty-utils.ts:67-93`](lib/royalty-utils.ts#L67-L93))
+   - Example claim transaction: [Revenue Claim](https://aeneid.storyscan.io/tx/0x3ba5ea427f9c2102ee186e18f835662a178c733ac02095725a768c805b9f9505)
+
+### Revenue Claiming Features
+
+#### Claim from Asset Modals
+
+Users can claim revenue directly from their asset management interfaces:
+
+- **Original Assets**: The "Claim All Revenue" button in the asset modal ([`components/dashboard/my-assets.tsx:137`](components/dashboard/my-assets.tsx#L137)) allows owners to claim revenue from their original IP assets
+- **Derivative Assets**: Derivative owners can also claim revenue from their derivative IP assets ([`components/dashboard/my-derivatives.tsx:138`](components/dashboard/my-derivatives.tsx#L138))
+
+Both implementations use the `claimRevenueForIp` utility function ([`lib/royalty-utils.ts:39`](lib/royalty-utils.ts#L39)) which:
+- Extracts the IP address from the asset (handling both URL and direct address formats)
+- Calls Story Protocol's `claimAllRevenue` with appropriate parameters
+- Returns transaction hash and claimed token information
+
+#### Claim History Tracking
+
+The platform provides comprehensive claim history tracking by querying on-chain events:
+
+- **Event Querying**: The system queries `RevenueTokenClaimed` events from each IP asset's royalty vault ([`lib/claim-history.ts:95-130`](lib/claim-history.ts#L95-L130))
+- **History Display**: All claim history is displayed in a dedicated dashboard tab ([`components/dashboard/claim-history.tsx`](components/dashboard/claim-history.tsx)) showing:
+  - Claim amount in $WIP tokens
+  - Transaction timestamp
+  - Asset type (original or derivative)
+  - Links to transaction and IP asset explorers
+- **Summary Statistics**: The claim history page displays total claimed amount and total number of claims
+
+The claim history fetcher ([`lib/claim-history.ts:60-183`](lib/claim-history.ts#L60-L183)):
+- Fetches all user IP assets (both original and derivatives)
+- Gets the royalty vault address for each IP using Story Protocol SDK
+- Queries `RevenueTokenClaimed` events from each vault
+- Formats and displays claim information with timestamps
+
+### Revenue Flow Architecture
+
+```
+Derivative Usage
+    ↓
+Mint License Tokens (pay minting fee)
+    ↓
+Revenue Distributed to Parent IP Vault
+    ↓
+Original Creator Claims Revenue
+    ↓
+Revenue Transferred to Creator's Wallet
+```
+
+### Configuration
+
+Revenue sharing parameters are configured during asset registration:
+
+- **Minting Fee**: Set during device registration (Phase 2)
+  - Specified in IP tokens, converted to $WIP during minting
+  - Stored in device configuration and applied to all assets from that device
+
+- **Revenue Share Percentage**: Configured as a percentage (0-100%)
+  - Applied to commercial license usage
+  - Determines how much revenue the original creator receives when derivatives are used
+
+### Benefits
+
+1. **Automatic Distribution**: Revenue is automatically collected in royalty vaults when license tokens are minted
+2. **Transparent Tracking**: All claims are recorded on-chain and visible in the claim history
+3. **Flexible Claiming**: Creators can claim revenue at any time, accumulating earnings from multiple derivative uses
+4. **Multi-Asset Support**: The system handles both original assets and derivatives, allowing creators to earn from both types
+
+This revenue system creates a sustainable economic model that incentivizes content creators to contribute verified, authentic data while ensuring fair compensation for their contributions to the platform.
 
 ---
 
@@ -907,4 +1042,3 @@ The system addresses a critical gap in the information ecosystem: the inability 
 The platform's economic model, built on Story Protocol's Programmable IP License system, creates sustainable incentives for content creators while enabling organizations to access verified data with confidence. As the platform scales and expands device compatibility, it has the potential to significantly reduce the impact of misinformation and restore trust in digital visual content.
 
 Looking forward, the ongoing developments in video support, mobile device integration, and wearable technology will further democratize access to verified content capture, making authenticity verification accessible to a broader range of users and use cases. DeepShare is not just a technical solution—it is a foundational infrastructure for building a more trustworthy information ecosystem in the age of AI.
-
