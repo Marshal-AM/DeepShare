@@ -9,6 +9,8 @@ Because real should be provable.
 - [Live Demo](https://deepshare-frontend.vercel.app)
 - Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
 - Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
+- Example Revenue claim transaction: [View on Aeneid Explorer](https://aeneid.storyscan.io/tx/0x3ba5ea427f9c2102ee186e18f835662a178c733ac02095725a768c805b9f9505)
+- Example derivative asset usage (license token payment) tx: [View on Aeneid Explorer](https://aeneid.storyscan.io/tx/0x8f29167303f5ca0a0788382730eb5a02e4f8c1bc7a95596f7e875f62b18b4dfd)
 - Depth metadata of an example image captured - [View Here](https://github.com/Marshal-AM/DeepShare/blob/main/raspberry-pi/depth_capture_1763863841.json)
 
 ---
@@ -45,19 +47,25 @@ Because real should be provable.
 The DeepShare platform includes a comprehensive test page for simulating real-world usage scenarios and royalty payment flows for derivative assets. This allows users to understand how the revenue system works before deploying in production.
 
 1. **Navigate to Test Page**
+
+   <img width="1456" height="910" alt="Screenshot 2025-12-13 at 1 15 54 AM" src="https://github.com/user-attachments/assets/587cda68-54dd-47ed-9de1-68bdc15a94c0" />
+
    - Visit the test royalty page at [https://deepshare-frontend.vercel.app/test-royalty](https://deepshare-frontend.vercel.app/test-royalty) (requires wallet connection)
    - Ensure your MetaMask wallet is connected to the Aeneid network
 
-2. **Select a Derivative Asset You Minted**
+3. **Select a Derivative Asset You Minted**
    - If you havent minted a derivative asset, follow the previous section's steps to mint one.
    - The page displays all derivative assets you've minted from the marketplace
    - Select a derivative from the grid to begin testing
 
-3. **Fetch License Terms**
+4. **Fetch License Terms**
    - Click "Fetch License Terms" to load available license terms for the selected derivative
    - Review the minting fee and revenue share percentage for each license option
 
-4. **Simulate Usage**
+5. **Simulate Usage**
+
+   <img width="1456" height="910" alt="Screenshot 2025-12-13 at 12 59 00 AM" src="https://github.com/user-attachments/assets/ca8b34d0-b232-4b4c-824b-a60cf32cea7e" />
+
    - Enter the number of license tokens to mint (default: 1)
    - Click "Simulate Usage" to execute the royalty payment flow
    - The system will:
@@ -66,15 +74,13 @@ The DeepShare platform includes a comprehensive test page for simulating real-wo
      - Distribute revenue to the original asset owner based on the configured revenue share percentage
      - Display transaction hashes and detailed logs of the process
 
-5. **View Transaction Details**
+7. **View Transaction Details**
+
+   <img width="1456" height="910" alt="Screenshot 2025-12-13 at 12 59 09 AM" src="https://github.com/user-attachments/assets/bc46ae8c-2cea-41bc-8565-f3ac66e07ce4" />
+
    - All transactions are logged with timestamps and status
    - Click transaction links to view on Aeneid explorer
    - Example license token mint transaction: [View on Aeneid](https://aeneid.storyscan.io/tx/0x8f29167303f5ca0a0788382730eb5a02e4f8c1bc7a95596f7e875f62b18b4dfd)
-
-**Screenshots**:
-<!-- TODO: Add screenshot of test-royalty page with derivative selection -->
-<!-- TODO: Add screenshot of license terms display -->
-<!-- TODO: Add screenshot of usage simulation with logs -->
 
 **NOTE**: This test page demonstrates the complete royalty flow including license token minting, fee payment, and revenue distribution. All transactions occur on the Aeneid testnet using real Story Protocol contracts.
 
@@ -236,6 +242,8 @@ The revenue system operates through a multi-layered flow that automatically dist
 
 Users can claim revenue directly from their asset management interfaces:
 
+<img width="1456" height="910" alt="Screenshot 2025-12-13 at 12 50 44 AM" src="https://github.com/user-attachments/assets/d077adfc-74e4-4400-9315-5e77197ce243" />
+
 - **Original Assets**: The "Claim All Revenue" button in the asset modal ([`components/dashboard/my-assets.tsx:137`](components/dashboard/my-assets.tsx#L137)) allows owners to claim revenue from their original IP assets
 - **Derivative Assets**: Derivative owners can also claim revenue from their derivative IP assets ([`components/dashboard/my-derivatives.tsx:138`](components/dashboard/my-derivatives.tsx#L138))
 
@@ -246,7 +254,9 @@ Both implementations use the `claimRevenueForIp` utility function ([`lib/royalty
 
 #### Claim History Tracking
 
-The platform provides comprehensive claim history tracking by querying on-chain events:
+<img width="1456" height="910" alt="Screenshot 2025-12-13 at 12 50 59 AM" src="https://github.com/user-attachments/assets/3424f13c-9dc9-4e63-9131-f21c1c3f741e" />
+
+The platform provides claim history tracking by querying on-chain events:
 
 - **Event Querying**: The system queries `RevenueTokenClaimed` events from each IP asset's royalty vault ([`lib/claim-history.ts:95-130`](lib/claim-history.ts#L95-L130))
 - **History Display**: All claim history is displayed in a dedicated dashboard tab ([`components/dashboard/claim-history.tsx`](components/dashboard/claim-history.tsx)) showing:
