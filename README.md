@@ -42,6 +42,20 @@ Battling AI generated misinformation, one image at a time!
 
 ---
 
+## Developments Actively Being Worked On
+
+DeepShare is continuously evolving to expand device compatibility and enhance verification capabilities. The following developments are currently in active development:
+
+1. **Video Upload Support (XR Motion Capture)**: Extending the platform to support video uploads with depth data from XR motion capture systems. This will enable verification of dynamic events and motion sequences, providing temporal depth information that complements static image captures. The system will process video frames with depth metadata and create verifiable video assets on the blockchain.
+
+2. **Dual Camera Android Device Support**: Developing support for Android devices with dual camera systems using Termux, enabling users to capture depth-verified images directly from their smartphones. This expansion will significantly increase accessibility, allowing anyone with a compatible Android device to contribute verified content without requiring specialized hardware.
+
+3. **Meta Ray-Ban Smart Glasses Integration**: Creating a mobile application that interfaces with Meta Ray-Ban smart glasses to enable hands-free depth-verified image capture. This development will provide a seamless, wearable solution for real-time evidence capture, making verification accessible in field conditions where traditional cameras may be impractical.
+
+4. **AI-Powered Verification Layer**: Implementing an additional verification layer that uses machine learning models to analyze depth data patterns and detect anomalies that might indicate tampering or synthetic generation. This complementary verification mechanism will work alongside cryptographic proofs to provide multi-layered authenticity validation, further strengthening the platform's ability to distinguish genuine captures from AI-generated content.
+
+---
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -56,6 +70,7 @@ Battling AI generated misinformation, one image at a time!
   - [Phase 4: IPFS Upload & Storage](#phase-4-ipfs-upload--storage)
   - [Phase 5: IP Asset Registration](#phase-5-ip-asset-registration)
   - [Phase 6: Derivative IP Minting](#phase-6-derivative-ip-minting)
+- [Conclusion](#conclusion)
 
 ---
 
@@ -882,4 +897,14 @@ NEXT_PUBLIC_PINATA_SECRET_KEY=...
 - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
 
 ---
+
+## Conclusion
+
+DeepShare represents a fundamental shift in how we verify and authenticate visual data in an era increasingly dominated by AI-generated content. By combining depth mapping technology with blockchain-based intellectual property protection, the platform creates an immutable chain of provenance from physical capture to blockchain registration.
+
+The system addresses a critical gap in the information ecosystem: the inability to reliably distinguish between authentic, real-world content and synthetically generated material. Through cryptographic signatures, depth data verification, and blockchain-backed IP registration, DeepShare provides organizations and individuals with a trusted mechanism for sourcing and licensing verified visual data.
+
+The platform's economic model, built on Story Protocol's Programmable IP License system, creates sustainable incentives for content creators while enabling organizations to access verified data with confidence. As the platform scales and expands device compatibility, it has the potential to significantly reduce the impact of misinformation and restore trust in digital visual content.
+
+Looking forward, the ongoing developments in video support, mobile device integration, and wearable technology will further democratize access to verified content capture, making authenticity verification accessible to a broader range of users and use cases. DeepShare is not just a technical solution—it is a foundational infrastructure for building a more trustworthy information ecosystem in the age of AI.
 
