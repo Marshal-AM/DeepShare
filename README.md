@@ -1,11 +1,11 @@
 # DeepShare
 
-Because real should be provable.
+Battling AI generated misinformation, one image at a time!
 
 ## Resources
 
 - [Pitch Deck](https://www.canva.com/design/DAG7Q0oIhho/3yLd0P4UmiLTEozsdq67hQ/view?utm_content=DAG7Q0oIhho&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h8b545d3ce3)
-- [Demo Video](https://youtu.be/lzSAHpoP6_s)
+- [Demo Video](#)
 - [Live Demo](https://deepshare-frontend.vercel.app)
 - Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
 - Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
@@ -266,7 +266,7 @@ flowchart TB
 
 ### Phase 1: Device Calibration
 
-**Location**: `raspberry-pi/callibration/calibrate.py`
+**Location**: [`raspberry-pi/callibration/calibrate.py`](raspberry-pi/callibration/calibrate.py)
 
 **Purpose**: Calibrate stereo cameras to enable accurate depth mapping.
 
@@ -308,18 +308,18 @@ python calibrate.py
 
 ### Phase 2: Device Registration
 
-**Location**: `raspberry-pi/register_device.sh` + `raspberry-pi/generate_wallet.py`
+**Location**: [`raspberry-pi/register_device.sh`](raspberry-pi/register_device.sh) + [`raspberry-pi/generate_wallet.py`](raspberry-pi/generate_wallet.py)
 
 **Purpose**: Register device in the system and generate cryptographic identity.
 
 #### Process:
 
-1. **Wallet Generation** (`generate_wallet.py`)
+1. **Wallet Generation** ([`generate_wallet.py`](raspberry-pi/generate_wallet.py))
    - Creates new Ethereum wallet using `eth_account`
    - Generates private key and wallet address
    - Collects device hardware details (hostname, MAC, serial, etc.)
 
-2. **Device Registration** (`register_device.sh`)
+2. **Device Registration** ([`register_device.sh`](raspberry-pi/register_device.sh))
    - Generates QR code with registration URL
    - URL includes wallet address and device details
    - Prompts for IP licensing configuration:
@@ -331,7 +331,7 @@ python calibrate.py
    - Reviews device details
    - Submits registration to backend
 
-4. **Backend Storage** (`backend/main.py`)
+4. **Backend Storage** ([`backend/main.py`](backend/main.py))
    - Stores device in Supabase `Devices` table
    - Links wallet address to device details
    - Enables device verification for captures
@@ -365,7 +365,7 @@ cd raspberry-pi
 
 ### Phase 3: Image Capture & Depth Mapping
 
-**Location**: `raspberry-pi/depthmap.py`
+**Location**: [`raspberry-pi/depthmap.py`](raspberry-pi/depthmap.py)
 
 **Purpose**: Capture stereo images, compute depth maps, and prepare signed payload.
 
@@ -463,7 +463,7 @@ python depthmap.py
 
 ### Phase 4: IPFS Upload & Storage
 
-**Location**: `backend/main.py`
+**Location**: [`backend/main.py`](backend/main.py)
 
 **Purpose**: Upload images and metadata to IPFS via Pinata, store CIDs in Supabase.
 
@@ -565,13 +565,13 @@ python main.py
 
 ### Phase 5: IP Asset Registration
 
-**Location**: `story-server/server.js` + `raspberry-pi/register_ip_asset.py`
+**Location**: [`story-server/server.js`](story-server/server.js) + [`raspberry-pi/register_ip_asset.py`](raspberry-pi/register_ip_asset.py)
 
 **Purpose**: Register captured images as IP assets on Story Protocol with commercial licenses.
 
 #### Process:
 
-1. **Device Initiates Registration** (`register_ip_asset.py`)
+1. **Device Initiates Registration** ([`register_ip_asset.py`](raspberry-pi/register_ip_asset.py))
    - Called automatically after successful IPFS upload
    - Sends request to Story Protocol server:
      ```json
@@ -585,7 +585,7 @@ python main.py
      }
      ```
 
-2. **Story Server Processing** (`server.js`)
+2. **Story Server Processing** ([`server.js`](story-server/server.js))
    - Receives registration request
    - Fetches metadata from IPFS (if needed)
    - Creates IP metadata (Story Protocol format)
@@ -725,13 +725,13 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
 
 ### Phase 6: Derivative IP Minting
 
-**Location**: `frontend/app/marketplace/page.tsx` + `frontend/components/marketplace/use-asset-modal.tsx` + `frontend/lib/story-client.ts`
+**Location**: [`frontend/app/marketplace/page.tsx`](frontend/app/marketplace/page.tsx) + [`frontend/components/marketplace/use-asset-modal.tsx`](frontend/components/marketplace/use-asset-modal.tsx) + [`frontend/lib/story-client.ts`](frontend/lib/story-client.ts)
 
 **Purpose**: Enable organizations to mint derivative IP assets from marketplace assets, creating licensed derivative works with automated royalty distribution.
 
 #### Process:
 
-1. **Marketplace Asset Selection** (`page.tsx`, `marketplace-modal.tsx`)
+1. **Marketplace Asset Selection** ([`page.tsx`](frontend/app/marketplace/page.tsx), [`marketplace-modal.tsx`](frontend/components/marketplace/marketplace-modal.tsx))
    - User browses marketplace assets via the frontend
    - Each asset displays image preview, device information, and IP asset details
    - User clicks on an asset to view full details including:
@@ -740,9 +740,9 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
      - IP asset explorer link
      - Transaction hash
 
-2. **License Terms Fetching** (`use-asset-modal.tsx`)
+2. **License Terms Fetching** ([`use-asset-modal.tsx`](frontend/components/marketplace/use-asset-modal.tsx))
    - Frontend extracts IP address from asset's IP field (handles both URL and direct address formats)
-   - Creates Story Protocol client using user's MetaMask wallet (`story-client.ts`)
+   - Creates Story Protocol client using user's MetaMask wallet ([`story-client.ts`](frontend/lib/story-client.ts))
    - Fetches attached license terms from the parent IP asset
    - Displays available license options:
      - **Commercial License**: Requires minting fee and revenue share percentage
@@ -784,12 +784,12 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
      }
      ```
 
-5. **IPFS Upload** (`ipfs.ts`)
+5. **IPFS Upload** ([`ipfs.ts`](frontend/lib/ipfs.ts))
    - Uploads both IP metadata and NFT metadata to IPFS
    - Generates SHA-256 hashes for both metadata objects
    - Returns IPFS CIDs for both metadata files
 
-6. **Derivative Registration** (`story-client.ts`)
+6. **Derivative Registration** ([`story-client.ts`](frontend/lib/story-client.ts))
    - Uses Story Protocol SDK to register derivative IP asset:
      ```typescript
      client.ipAsset.registerDerivativeIpAsset({
@@ -813,7 +813,7 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
    - Attaches selected license terms
    - Mints NFT representing derivative rights
 
-7. **Database Storage** (`app/api/story/store-derivative/route.ts`)
+7. **Database Storage** ([`app/api/story/store-derivative/route.ts`](frontend/app/api/story/store-derivative/route.ts))
    - Stores derivative information in Supabase `derivatives` table:
      - `owner_address`: User who minted the derivative
      - `parent_asset_id`: Original marketplace asset ID
@@ -835,24 +835,24 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
 
 #### Frontend Components:
 
-**Marketplace Page** (`page.tsx`):
+**Marketplace Page** ([`page.tsx`](frontend/app/marketplace/page.tsx)):
 - Displays grid of marketplace assets
 - Search functionality
 - Asset card with preview and metadata
 - Opens asset modal on click
 
-**Marketplace Modal** (`marketplace-modal.tsx`):
+**Marketplace Modal** ([`marketplace-modal.tsx`](frontend/components/marketplace/marketplace-modal.tsx)):
 - Displays full asset details
 - Shows image preview, technical details, and owner information
 - "Use This Asset" button opens derivative minting modal
 
-**Use Asset Modal** (`use-asset-modal.tsx`):
+**Use Asset Modal** ([`use-asset-modal.tsx`](frontend/components/marketplace/use-asset-modal.tsx)):
 - License selection interface
 - Metadata generation and IPFS upload
 - Story Protocol transaction handling
 - Success/error state management
 
-**Story Client** (`story-client.ts`):
+**Story Client** ([`story-client.ts`](frontend/lib/story-client.ts)):
 - Creates Story Protocol client from MetaMask wallet
 - Handles chain switching to Aeneid network
 - Provides SDK client for derivative registration
