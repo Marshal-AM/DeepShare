@@ -9,7 +9,7 @@ Battling AI generated misinformation, one image at a time!
 - [Live Demo](https://deepshare-frontend.vercel.app)
 - Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
 - Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
-- Depth metadata of an example image captured - [View Here](https://github.com/Marshal-AM/DeepShare/blob/main/device-pi/depth_capture_1763863841.json)
+- Depth metadata of an example image captured - [View Here](https://github.com/Marshal-AM/DeepShare/blob/main/raspberry-pi/depth_capture_1763863841.json)
 
 ---
 
@@ -19,7 +19,7 @@ Battling AI generated misinformation, one image at a time!
 
 1. On your Raspberry Pi (4GB RAM or above), run the following command:
    ```bash
-   git clone https://github.com/Marshal-AM/deepshare.git && cd device-pi && chmod +x register_device.sh && ./register_device.sh
+   git clone https://github.com/Marshal-AM/deepshare.git && cd raspberry-pi && chmod +x register_device.sh && ./register_device.sh
    ```
 
 2. Set your minting fee and royalty share percentage.
@@ -266,7 +266,7 @@ flowchart TB
 
 ### Phase 1: Device Calibration
 
-**Location**: `device-pi/callibration/calibrate.py`
+**Location**: `raspberry-pi/callibration/calibrate.py`
 
 **Purpose**: Calibrate stereo cameras to enable accurate depth mapping.
 
@@ -298,7 +298,7 @@ flowchart TB
 
 #### Usage:
 ```bash
-cd device-pi/callibration
+cd raspberry-pi/callibration
 python calibrate.py
 ```
 
@@ -308,7 +308,7 @@ python calibrate.py
 
 ### Phase 2: Device Registration
 
-**Location**: `device-pi/register_device.sh` + `device-pi/generate_wallet.py`
+**Location**: `raspberry-pi/register_device.sh` + `raspberry-pi/generate_wallet.py`
 
 **Purpose**: Register device in the system and generate cryptographic identity.
 
@@ -347,7 +347,7 @@ python calibrate.py
 
 #### Usage:
 ```bash
-cd device-pi
+cd raspberry-pi
 ./register_device.sh
 ```
 
@@ -365,7 +365,7 @@ cd device-pi
 
 ### Phase 3: Image Capture & Depth Mapping
 
-**Location**: `device-pi/depthmap.py`
+**Location**: `raspberry-pi/depthmap.py`
 
 **Purpose**: Capture stereo images, compute depth maps, and prepare signed payload.
 
@@ -445,7 +445,7 @@ cd device-pi
 
 #### Usage:
 ```bash
-cd device-pi
+cd raspberry-pi
 python depthmap.py
 ```
 
@@ -565,7 +565,7 @@ python main.py
 
 ### Phase 5: IP Asset Registration
 
-**Location**: `story-server/server.js` + `device-pi/register_ip_asset.py`
+**Location**: `story-server/server.js` + `raspberry-pi/register_ip_asset.py`
 
 **Purpose**: Register captured images as IP assets on Story Protocol with commercial licenses.
 
@@ -703,7 +703,7 @@ npm start
 
 **Manual Registration** (from device):
 ```bash
-cd device-pi
+cd raspberry-pi
 python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [minting_fee] [revenue_share]
 ```
 
