@@ -122,6 +122,10 @@ def store_in_supabase(wallet_address: str, image_cid: str, metadata_cid: str):
     Store wallet_address, image_cid, and metadata_cid in Supabase images table using REST API
     """
     try:
+        # Normalize wallet address to lowercase for consistency
+        # (Ethereum addresses are case-insensitive, but Supabase string comparison is case-sensitive)
+        wallet_address_lower = wallet_address.lower()
+        
         # Try both lowercase and quoted table name (Supabase can be case-sensitive)
         url = f"{SUPABASE_URL}/rest/v1/images"
         headers = {
@@ -131,7 +135,7 @@ def store_in_supabase(wallet_address: str, image_cid: str, metadata_cid: str):
             "Prefer": "return=representation"
         }
         data = {
-            "wallet_address": wallet_address,
+            "wallet_address": wallet_address_lower,
             "image_cid": image_cid,
             "metadata_cid": metadata_cid
         }
@@ -195,22 +199,49 @@ async def check_registration(wallet_address: str):
     Check if a device with the given wallet_address is registered in Supabase Devices table
     """
     try:
-        url = f"{SUPABASE_URL}/rest/v1/Devices"
-        headers = {
-            "apikey": SUPABASE_KEY,
-            "Authorization": f"Bearer {SUPABASE_KEY}",
-            "Content-Type": "application/json",
-        }
-        params = {
-            "wallet_address": f"eq.{wallet_address}",
-            "select": "wallet_address"
-        }
+        # Normalize wallet address to lowercase for case-insensitive comparison
+        # (Ethereum addresses are case-insensitive, but Supabase string comparison is case-sensitive)
+        wallet_address_lower = wallet_address.lower()
         
-        response = requests.get(url, headers=headers, params=params, timeout=10)
-        response.raise_for_status()
+        # Try both table name variations (case-sensitive)
+        table_names = ["Devices", "devices"]
+        data = []
         
-        data = response.json()
+        for table_name in table_names:
+            url = f"{SUPABASE_URL}/rest/v1/{table_name}"
+            headers = {
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+                "Content-Type": "application/json",
+            }
+            params = {
+                "wallet_address": f"eq.{wallet_address_lower}",
+                "select": "wallet_address"
+            }
+            
+            try:
+                response = requests.get(url, headers=headers, params=params, timeout=10)
+                response.raise_for_status()
+                data = response.json()
+                if data:  # If we got results, use this table name
+                    break
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code == 404:
+                    # Table not found, try next variation
+                    continue
+                else:
+                    raise
+        
         is_registered = len(data) > 0
+        
+        # Debug logging
+        print(f"🔍 Check registration for {wallet_address} (normalized: {wallet_address_lower}):")
+        print(f"   Supabase response: {len(data)} record(s) found")
+        print(f"   Registered: {is_registered}")
+        if data:
+            print(f"   Data: {data}")
+        elif not data:
+            print(f"   ⚠️  No device found with wallet_address: {wallet_address_lower}")
         
         return JSONResponse(
             status_code=200,
@@ -220,6 +251,7 @@ async def check_registration(wallet_address: str):
             }
         )
     except requests.exceptions.RequestException as e:
+        print(f"❌ Registration check error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Registration check failed: {str(e)}")
 
 
@@ -346,4 +378,3 @@ if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "8000"))
     uvicorn.run(app, host="0.0.0.0", port=port)
-
