@@ -91,9 +91,6 @@ The inability to verify the authenticity of visual data has far-reaching consequ
 - **News Outlets**: Media organizations require verified proof captured by actual individuals in the physical world to ensure the authenticity of their reporting and maintain public trust.
 - **Scientific Researchers**: Research institutions need access to genuine, depth-verified imagery to ensure the accuracy and reproducibility of their findings.
 - **Law Enforcement and Legal Systems**: Courts and investigative agencies require credible visual evidence with verifiable provenance for use in legal proceedings.
-- **Educational Institutions**: Academic institutions need authentic visual data for educational purposes, ensuring students receive accurate information.
-- **Medical and Healthcare**: Healthcare providers and medical researchers require verified imaging data for diagnostic and research purposes.
-- **Architecture and Construction**: Professionals in these fields need accurate spatial data for planning, documentation, and verification purposes.
 
 The current information ecosystem lacks a reliable mechanism to verify the physical authenticity of visual data, creating vulnerabilities that can be exploited to spread misinformation and undermine trust in digital content.
 
