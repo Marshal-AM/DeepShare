@@ -6,7 +6,7 @@ Battling AI generated misinformation, one image at a time!
 
 - [Pitch Deck](#)
 - [Demo Video](#)
-- [Live Demo](#)
+- [Live Demo](https://deepshare-frontend.vercel.app)
 - Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
 - Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
 - Depth metadata of an example image captured - [View Here](https://github.com/Marshal-AM/DeepShare/blob/main/device-pi/depth_capture_1763863841.json)
@@ -30,7 +30,7 @@ Battling AI generated misinformation, one image at a time!
 
 ### Using Media Available from the Platform
 
-1. Visit the DeepShare marketplace.
+1. Visit the DeepShare marketplace - [Click Here](https://deepshare-frontend.vercel.app/marketplace).
 
 2. Select the asset you want to use.
 
@@ -90,11 +90,12 @@ DeepShare addresses this challenge through a comprehensive system that combines 
 
 ### Capture Software
 
-We have developed specialized software that can run on **wearables** and other portable devices such as **smart glasses** and mobile phones with dual camera systems or devices equipped with **LIDAR sensors**. This software captures images along with their corresponding depth metadata and directly mints intellectual property rights on Story Protocol for both the image and its depth data.
+We have developed specialized software that can run on **wearables** and other portable devices such as **smart glasses** and mobile phones with dual camera systems or devices equipped with **LIDAR sensors**. This software captures images along with their corresponding depth metadata and directly mints intellectual property rights using **Story Protocol** for both the image and its depth data.
 
 The software has been tested and validated in the following prototype setup:
 
-[Prototype image placeholder]
+<img width="4032" height="3024" alt="Prototype" src="https://github.com/user-attachments/assets/d4166a5f-c75c-49ea-a611-71a4480fe9f1" />
+
 
 The capture system uses stereo vision depth mapping to generate accurate depth information, which serves as a cryptographic proof of physical authenticity. Each captured image is cryptographically signed using EIP-191 signatures, creating an immutable record of the capture event.
 
@@ -106,6 +107,9 @@ We have developed a web-based platform where users can register their capture de
 - **Image Marketplace**: Organizations can browse verified images with depth metadata, view licensing terms, and mint derivatives for commercial or non-commercial use.
 - **Royalty Management**: Automated royalty distribution ensures image contributors receive compensation when their data is used by others.
 - **IP Asset Management**: All registered images are minted as IP assets on Story Protocol, providing blockchain-backed provenance and licensing terms.
+
+
+<img width="1464" height="810" alt="Screenshot 2025-12-12 at 12 27 04 PM" src="https://github.com/user-attachments/assets/7f23ae78-1c61-4e72-b550-89e9b5899794" />
 
 
 ### Benefits
@@ -121,6 +125,14 @@ This solution **provides value** to all parties involved:
 ---
 
 ## How it Works
+
+<div align='center'>
+<img width="919" height="820" alt="Screenshot 2025-12-12 at 12 14 01 PM" src="https://github.com/user-attachments/assets/78aa4394-2397-4f75-8ebb-a75006a15e48" />
+</div>
+
+<div align='center'>
+<img width="652" height="527" alt="Screenshot 2025-12-12 at 12 15 24 PM" src="https://github.com/user-attachments/assets/a5332a5f-4568-452f-a581-6f9572ebfeef" />
+</div>
 
 DeepShare operates through a six-phase pipeline that transforms physical image capture into blockchain-verified intellectual property assets:
 
