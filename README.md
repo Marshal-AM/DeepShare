@@ -1,6 +1,6 @@
 # DeepShare
 
-Battling AI generated misinformation, one image at a time!
+Because real should be provable.
 
 ## Resources
 
