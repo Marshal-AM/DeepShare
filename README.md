@@ -219,7 +219,7 @@ The revenue system operates through a multi-layered flow that automatically dist
 
 1. **License Token Minting**
    - When a user wants to utilize a derivative asset, they must mint license tokens from the parent IP asset
-   - The minting process is handled by Story Protocol's licensing module ([`app/test-royalty/page.tsx:188`](app/test-royalty/page.tsx#L188))
+   - The minting process is handled by Story Protocol's licensing module ([`app/test-royalty/page.tsx:188`](frontend/app/test-royalty/page.tsx#L188))
    - Users pay a minting fee (in $WIP tokens) set by the original asset owner
    - Example transaction: [License Token Mint](https://aeneid.storyscan.io/tx/0x8f29167303f5ca0a0788382730eb5a02e4f8c1bc7a95596f7e875f62b18b4dfd)
 
@@ -230,10 +230,10 @@ The revenue system operates through a multi-layered flow that automatically dist
 
 3. **Revenue Claiming**
    - Original asset owners can claim accumulated revenue from their IP assets
-   - The claiming process uses Story Protocol's `claimAllRevenue` function ([`lib/royalty-utils.ts:48`](lib/royalty-utils.ts#L48))
+   - The claiming process uses Story Protocol's `claimAllRevenue` function ([`lib/royalty-utils.ts:48`](frontend/lib/royalty-utils.ts#L48))
    - Revenue can be claimed for:
-     - **Standalone Assets**: Original assets without derivatives ([`lib/royalty-utils.ts:39-60`](lib/royalty-utils.ts#L39-L60))
-     - **Parent Assets with Derivatives**: Assets that have been used in derivative works ([`lib/royalty-utils.ts:67-93`](lib/royalty-utils.ts#L67-L93))
+     - **Standalone Assets**: Original assets without derivatives ([`lib/royalty-utils.ts:39-60`](frontend/lib/royalty-utils.ts#L39-L60))
+     - **Parent Assets with Derivatives**: Assets that have been used in derivative works ([`lib/royalty-utils.ts:67-93`](frontend/lib/royalty-utils.ts#L67-L93))
    - Example claim transaction: [Revenue Claim](https://aeneid.storyscan.io/tx/0x3ba5ea427f9c2102ee186e18f835662a178c733ac02095725a768c805b9f9505)
 
 ### Revenue Claiming Features
@@ -244,10 +244,10 @@ Users can claim revenue directly from their asset management interfaces:
 
 <img width="1456" height="910" alt="Screenshot 2025-12-13 at 12 50 44 AM" src="https://github.com/user-attachments/assets/d077adfc-74e4-4400-9315-5e77197ce243" />
 
-- **Original Assets**: The "Claim All Revenue" button in the asset modal ([`components/dashboard/my-assets.tsx:137`](components/dashboard/my-assets.tsx#L137)) allows owners to claim revenue from their original IP assets
-- **Derivative Assets**: Derivative owners can also claim revenue from their derivative IP assets ([`components/dashboard/my-derivatives.tsx:138`](components/dashboard/my-derivatives.tsx#L138))
+- **Original Assets**: The "Claim All Revenue" button in the asset modal ([`components/dashboard/my-assets.tsx:137`](frontend/components/dashboard/my-assets.tsx#L137)) allows owners to claim revenue from their original IP assets
+- **Derivative Assets**: Derivative owners can also claim revenue from their derivative IP assets ([`components/dashboard/my-derivatives.tsx:138`](frontend/components/dashboard/my-derivatives.tsx#L138))
 
-Both implementations use the `claimRevenueForIp` utility function ([`lib/royalty-utils.ts:39`](lib/royalty-utils.ts#L39)) which:
+Both implementations use the `claimRevenueForIp` utility function ([`lib/royalty-utils.ts:39`](frontend/lib/royalty-utils.ts#L39)) which:
 - Extracts the IP address from the asset (handling both URL and direct address formats)
 - Calls Story Protocol's `claimAllRevenue` with appropriate parameters
 - Returns transaction hash and claimed token information
@@ -258,15 +258,15 @@ Both implementations use the `claimRevenueForIp` utility function ([`lib/royalty
 
 The platform provides claim history tracking by querying on-chain events:
 
-- **Event Querying**: The system queries `RevenueTokenClaimed` events from each IP asset's royalty vault ([`lib/claim-history.ts:95-130`](lib/claim-history.ts#L95-L130))
-- **History Display**: All claim history is displayed in a dedicated dashboard tab ([`components/dashboard/claim-history.tsx`](components/dashboard/claim-history.tsx)) showing:
+- **Event Querying**: The system queries `RevenueTokenClaimed` events from each IP asset's royalty vault ([`lib/claim-history.ts:95-130`](frontend/lib/claim-history.ts#L95-L130))
+- **History Display**: All claim history is displayed in a dedicated dashboard tab ([`components/dashboard/claim-history.tsx`](frontend/components/dashboard/claim-history.tsx)) showing:
   - Claim amount in $WIP tokens
   - Transaction timestamp
   - Asset type (original or derivative)
   - Links to transaction and IP asset explorers
 - **Summary Statistics**: The claim history page displays total claimed amount and total number of claims
 
-The claim history fetcher ([`lib/claim-history.ts:60-183`](lib/claim-history.ts#L60-L183)):
+The claim history fetcher ([`lib/claim-history.ts:60-183`](frontend/lib/claim-history.ts#L60-L183)):
 - Fetches all user IP assets (both original and derivatives)
 - Gets the royalty vault address for each IP using Story Protocol SDK
 - Queries `RevenueTokenClaimed` events from each vault
