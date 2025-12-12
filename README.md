@@ -5,7 +5,7 @@ Battling AI generated misinformation, one image at a time!
 ## Resources
 
 - [Pitch Deck](https://www.canva.com/design/DAG7Q0oIhho/3yLd0P4UmiLTEozsdq67hQ/view?utm_content=DAG7Q0oIhho&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h8b545d3ce3)
-- [Demo Video](#)
+- [Demo Video](https://youtu.be/lzSAHpoP6_s)
 - [Live Demo](https://deepshare-frontend.vercel.app)
 - Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
 - Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
