@@ -1,6 +1,6 @@
 # DeepShare
 
-Because real should be provable.
+Turn Your Wearables Into Trusted Media Contributors.
 
 ## Resources
 
