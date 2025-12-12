@@ -31,8 +31,8 @@ if (!PRIVATE_KEY) {
 const IPFS_GATEWAY = process.env.IPFS_GATEWAY || "https://gateway.pinata.cloud";
 
 // Pinata credentials for uploading metadata
-const PINATA_API_KEY = process.env.PINATA_API_KEY || "0ff2ea6684694884ba5e";
-const PINATA_SECRET_KEY = process.env.PINATA_SECRET_KEY || "2ca0f5efa68114d777c1439af366d408c9c9091777e6d9f229fa46d516c1a213";
+const PINATA_API_KEY = process.env.PINATA_API_KEY;
+const PINATA_SECRET_KEY = process.env.PINATA_SECRET_KEY;
 
 // Supabase configuration for storing IP registration data
 const SUPABASE_URL = process.env.SUPABASE_URL;
