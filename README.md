@@ -48,7 +48,7 @@ DeepShare is continuously evolving to expand device compatibility and enhance ve
 
 1. **Video Upload Support (XR Motion Capture)**: Extending the platform to support video uploads with depth data from XR motion capture systems. This will enable verification of dynamic events and motion sequences, providing temporal depth information that complements static image captures. The system will process video frames with depth metadata and create verifiable video assets on the blockchain.
 
-2. **Dual Camera Android Device Support**: Developing support for Android devices with dual camera systems using Termux, enabling users to capture depth-verified images directly from their smartphones. This expansion will significantly increase accessibility, allowing anyone with a compatible Android device to contribute verified content without requiring specialized hardware.
+2. **Mobile Device Support**: Developing support for Android devices with dual camera systems using Termux, enabling users to capture depth-verified images directly from their smartphones. This expansion will significantly increase accessibility, allowing anyone with a compatible Android device to contribute verified content without requiring specialized hardware.
 
 3. **Meta Ray-Ban Smart Glasses Integration**: Creating a mobile application that interfaces with Meta Ray-Ban smart glasses to enable hands-free depth-verified image capture. This development will provide a seamless, wearable solution for real-time evidence capture, making verification accessible in field conditions where traditional cameras may be impractical.
 
