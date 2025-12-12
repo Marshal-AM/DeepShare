@@ -1,10 +1,52 @@
 # DeepShare
 
-A comprehensive blockchain-based evidence capture system that uses stereo vision depth mapping, IPFS storage, and Story Protocol for intellectual property protection. The system captures images with depth data, stores them on IPFS, and registers them as IP assets on the blockchain.
+Battling AI generated misinformation, one image at a time!
+
+## Resources
+
+- [Pitch Deck](#)
+- [Demo Video](#)
+- [Live Demo](#)
+- Parent Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
+- Derivative Asset Example - [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
+
+---
+
+## How to Use
+
+### Uploading Depth-Verified Images to Our Platform
+
+1. On your Raspberry Pi (4GB RAM or above), run the following command:
+   ```bash
+   git clone https://github.com/Marshal-AM/deepshare.git && cd device-pi && chmod +x register_device.sh && ./register_device.sh
+   ```
+
+2. Set your minting fee and royalty share percentage.
+
+3. Scan the generated QR Code and register your device in the DeepShare platform.
+
+4. Start capturing images!
+
+### Using Media Available from the Platform
+
+1. Visit the DeepShare marketplace.
+
+2. Select the asset you want to use.
+
+3. Press "Use this Asset".
+
+   **NOTE**: Make sure you have enough $IP testnet tokens to complete this transaction. You can obtain testnet tokens from the [Story Protocol Aeneid Faucet](https://cloud.google.com/application/web3/faucet/story/aeneid).
+
+4. You now have rights to the asset!
+
+---
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Introduction](#introduction)
+- [Problem Statement](#problem-statement)
+- [Our Solution](#solution)
+- [How it Works](#how-it-works)
 - [System Architecture](#system-architecture)
 - [Project Flow](#project-flow)
   - [Phase 1: Device Calibration](#phase-1-device-calibration)
@@ -12,19 +54,88 @@ A comprehensive blockchain-based evidence capture system that uses stereo vision
   - [Phase 3: Image Capture & Depth Mapping](#phase-3-image-capture--depth-mapping)
   - [Phase 4: IPFS Upload & Storage](#phase-4-ipfs-upload--storage)
   - [Phase 5: IP Asset Registration](#phase-5-ip-asset-registration)
+  - [Phase 6: Derivative IP Minting](#phase-6-derivative-ip-minting)
 
 ---
 
-## Overview
+## Introduction
 
-**Deepshare** is a decentralized evidence capture system that combines:
+DeepShare is a platform that enables users to upload images coupled with their corresponding depth metadata and mint intellectual property (IP) rights for both the image and its depth data. The platform combines stereo vision depth mapping technology with blockchain-based IP protection to create a verifiable, tamper-proof system for authenticating real-world visual data.
 
-- **Stereo Vision Depth Mapping**: Uses dual cameras to capture images with accurate depth information
-- **IPFS Storage**: Decentralized storage for images and metadata
-- **Blockchain IP Protection**: Story Protocol integration for intellectual property registration
-- **Cryptographic Signing**: EIP-191 signatures for data authenticity
+---
 
-The system is designed to run on Raspberry Pi devices or any system with dual cameras, providing tamper-proof evidence capture with blockchain-backed provenance.
+## Problem Statement
+
+The proliferation of highly convincing AI-generated images has created a critical challenge in distinguishing between verified, authentic data and synthetically generated content. This problem has become a significant source of misinformation and public confusion, as demonstrated by recent incidents where AI-generated content has been mistaken for real events.
+
+(We saw one such incident literally when writing this readme! [Click here to read](https://www.superherohype.com/news/640047-avengers-doomsday-cast-photos-tobey-maguire-doctor-strange))
+
+The inability to verify the authenticity of visual data has far-reaching consequences across multiple sectors. Organizations that rely on accurate, real-world data face increasing difficulty in sourcing trustworthy visual content. This challenge affects:
+
+- **News Outlets**: Media organizations require verified proof captured by actual individuals in the physical world to ensure the authenticity of their reporting and maintain public trust.
+- **Scientific Researchers**: Research institutions need access to genuine, depth-verified imagery to ensure the accuracy and reproducibility of their findings.
+- **Law Enforcement and Legal Systems**: Courts and investigative agencies require credible visual evidence with verifiable provenance for use in legal proceedings.
+- **Educational Institutions**: Academic institutions need authentic visual data for educational purposes, ensuring students receive accurate information.
+- **Medical and Healthcare**: Healthcare providers and medical researchers require verified imaging data for diagnostic and research purposes.
+- **Architecture and Construction**: Professionals in these fields need accurate spatial data for planning, documentation, and verification purposes.
+
+The current information ecosystem lacks a reliable mechanism to verify the physical authenticity of visual data, creating vulnerabilities that can be exploited to spread misinformation and undermine trust in digital content.
+
+---
+
+## Solution
+
+DeepShare addresses this challenge through a comprehensive system that combines depth-verified image capture with blockchain-based intellectual property registration. The platform consists of two primary components:
+
+### Capture Software
+
+We have developed specialized software that can run on **wearables** and other portable devices such as **smart glasses** and mobile phones with dual camera systems or devices equipped with **LIDAR sensors**. This software captures images along with their corresponding depth metadata and directly mints intellectual property rights on Story Protocol for both the image and its depth data.
+
+The software has been tested and validated in the following prototype setup:
+
+[Prototype image placeholder]
+
+The capture system uses stereo vision depth mapping to generate accurate depth information, which serves as a cryptographic proof of physical authenticity. Each captured image is cryptographically signed using EIP-191 signatures, creating an immutable record of the capture event.
+
+### Platform Infrastructure
+
+We have developed a web-based platform where users can register their capture devices and organizations requiring verified data can browse uploaded images and mint derivatives for their use. The platform provides:
+
+- **Device Registration**: Users register their capture devices, which generates a unique cryptographic identity linked to the device hardware.
+- **Image Marketplace**: Organizations can browse verified images with depth metadata, view licensing terms, and mint derivatives for commercial or non-commercial use.
+- **Royalty Management**: Automated royalty distribution ensures image contributors receive compensation when their data is used by others.
+- **IP Asset Management**: All registered images are minted as IP assets on Story Protocol, providing blockchain-backed provenance and licensing terms.
+
+
+### Benefits
+
+This solution **provides value** to all parties involved:
+
+1. **Image Contributors**: Contributors receive ongoing royalties through Story Protocol's Programmable IP License (PIL) system when organizations mint derivatives of their uploaded data. This creates a sustainable economic model that incentivizes the capture and sharing of authentic real-world data.
+
+2. **Organizations Requiring Trusted Data**: News outlets, scientific research institutions, law enforcement agencies, educational institutions, and other organizations gain access to a marketplace of verified, depth-authenticated visual data. Each asset includes cryptographic proof of physical capture, enabling organizations to confidently use the data knowing it represents genuine real-world content.
+
+3. **General Public**: As the platform scales, the widespread availability of verified, blockchain-authenticated data creates a fundamental shift in how society consumes visual information. By providing accessible verification mechanisms, the platform addresses the root cause of misinformation: the inability to distinguish authentic content from AI-generated fabrications. This infrastructure has the potential to significantly reduce the impact of AI-generated fake news and restore trust in digital visual content, creating a more informed and resilient information ecosystem.
+
+---
+
+## How it Works
+
+DeepShare operates through a six-phase pipeline that transforms physical image capture into blockchain-verified intellectual property assets:
+
+1. **Device Calibration**: Stereo cameras are calibrated using checkerboard patterns to generate rectification maps and depth computation parameters. This establishes the geometric relationship between cameras required for accurate depth mapping.
+
+2. **Device Registration**: Each capture device generates a unique Ethereum wallet and registers with the platform. Device hardware details are collected and linked to the wallet address, creating a cryptographic identity for the device. The device owner configures licensing terms including minting fees and revenue share percentages.
+
+3. **Image Capture & Depth Mapping**: The device captures synchronized stereo images, computes depth maps using Semi-Global Block Matching (SGBM) algorithms, and creates a cryptographically signed payload. Each capture includes the original image, depth data, and an EIP-191 signature proving authenticity.
+
+4. **IPFS Upload & Storage**: Images and metadata are uploaded to IPFS via Pinata, generating Content Identifiers (CIDs). The platform stores image CIDs, metadata CIDs, and wallet addresses in Supabase for querying and marketplace display.
+
+5. **IP Asset Registration**: Captured images are registered as IP assets on Story Protocol. The system creates IP metadata and NFT metadata, uploads them to IPFS, mints NFTs in a collection, and attaches Programmable IP Licenses (PIL) with configured minting fees and revenue shares. The IP asset ID and transaction hash are stored in Supabase.
+
+6. **Derivative IP Minting**: Organizations browse the marketplace, select assets, and mint derivative IP assets. Users select license terms (commercial or non-commercial), the system generates derivative metadata, uploads it to IPFS, and registers the derivative on Story Protocol. The derivative links to the parent IP asset and stores licensing information in Supabase.
+
+Each phase builds upon the previous, creating an immutable chain of provenance from physical capture to blockchain registration, enabling verifiable authenticity and automated royalty distribution.
 
 ---
 
@@ -91,16 +202,34 @@ flowchart TB
         AG --> AQ[Update Supabase<br/>ip + tx_hash]
     end
     
+    subgraph Phase6["Phase 6: Derivative IP Minting"]
+        AP --> AR[Marketplace Frontend<br/>page.tsx]
+        AR --> AS[User Selects Asset<br/>marketplace-modal.tsx]
+        AS --> AT[User Selects License<br/>Commercial/Non-Commercial]
+        AT --> AU[Frontend Client<br/>story-client.ts]
+        AU --> AV[Generate IP Metadata<br/>Derivative Format]
+        AU --> AW[Generate NFT Metadata<br/>Derivative NFT]
+        AV --> AX[Upload to IPFS<br/>ipfs.ts]
+        AW --> AX
+        AX --> AY[Story Protocol SDK<br/>Register Derivative]
+        AY --> AZ[Link to Parent IP<br/>License Terms ID]
+        AZ --> BA[Story Protocol Blockchain<br/>Aeneid Network]
+        BA --> BB[Derivative IP ID<br/>Transaction Hash]
+        BB --> BC[Store in Supabase<br/>derivatives table]
+    end
+    
     Phase1 --> Phase2
     Phase2 --> Phase3
     Phase3 --> Phase4
     Phase4 --> Phase5
+    Phase5 --> Phase6
     
     style Phase1 fill:#e1f5ff,stroke:#0066cc
     style Phase2 fill:#fff4e1,stroke:#cc6600
     style Phase3 fill:#e1ffe1,stroke:#00cc00
     style Phase4 fill:#ffe1f5,stroke:#cc0066
     style Phase5 fill:#f0e1ff,stroke:#6600cc
+    style Phase6 fill:#fff0e1,stroke:#cc8800
 ```
 
 ---
@@ -560,6 +689,184 @@ python register_ip_asset.py <image_cid> <depth_meta_file> [metadata_cid] [mintin
 - Collection creation: ~0.037 IP (one-time)
 - IP registration: ~0.037 IP (per image)
 - Estimate: ~100 images per 10 IP tokens
+
+**Example IP Asset**:
+- [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xCfE1B5f98d0598c8d9D47Ecaf3Da9A91EEf171f2)
+
+---
+
+### Phase 6: Derivative IP Minting
+
+**Location**: `frontend/app/marketplace/page.tsx` + `frontend/components/marketplace/use-asset-modal.tsx` + `frontend/lib/story-client.ts`
+
+**Purpose**: Enable organizations to mint derivative IP assets from marketplace assets, creating licensed derivative works with automated royalty distribution.
+
+#### Process:
+
+1. **Marketplace Asset Selection** (`page.tsx`, `marketplace-modal.tsx`)
+   - User browses marketplace assets via the frontend
+   - Each asset displays image preview, device information, and IP asset details
+   - User clicks on an asset to view full details including:
+     - Image CID and metadata CID
+     - Device owner information
+     - IP asset explorer link
+     - Transaction hash
+
+2. **License Terms Fetching** (`use-asset-modal.tsx`)
+   - Frontend extracts IP address from asset's IP field (handles both URL and direct address formats)
+   - Creates Story Protocol client using user's MetaMask wallet (`story-client.ts`)
+   - Fetches attached license terms from the parent IP asset
+   - Displays available license options:
+     - **Commercial License**: Requires minting fee and revenue share percentage
+     - **Non-Commercial Social Remixing**: Free for non-commercial use
+
+3. **License Selection**
+   - User selects desired license type
+   - System displays:
+     - Minting fee in WIP tokens
+     - Revenue share percentage (if commercial)
+     - License description
+
+4. **Derivative Metadata Generation**
+   - Creates IP metadata using Story Protocol format:
+     ```json
+     {
+       "title": "Derivative of Asset #123",
+       "description": "A derivative work created from marketplace asset #123...",
+       "createdAt": "1234567890",
+       "creators": [{
+         "name": "Derivative Creator",
+         "address": "0x...",
+         "contributionPercent": 100
+       }],
+       "image": "ipfs://QmaLRFE..."
+     }
+     ```
+   - Creates NFT metadata:
+     ```json
+     {
+       "name": "Derivative Asset #123",
+       "description": "Derivative NFT representing usage rights...",
+       "image": "ipfs://QmaLRFE...",
+       "attributes": [
+         { "key": "Parent Asset ID", "value": "123" },
+         { "key": "License Type", "value": "Commercial" },
+         { "key": "Original Owner", "value": "0x..." }
+       ]
+     }
+     ```
+
+5. **IPFS Upload** (`ipfs.ts`)
+   - Uploads both IP metadata and NFT metadata to IPFS
+   - Generates SHA-256 hashes for both metadata objects
+   - Returns IPFS CIDs for both metadata files
+
+6. **Derivative Registration** (`story-client.ts`)
+   - Uses Story Protocol SDK to register derivative IP asset:
+     ```typescript
+     client.ipAsset.registerDerivativeIpAsset({
+       nft: { 
+         type: 'mint', 
+         spgNftContract: SPGNFTContractAddress 
+       },
+       derivData: {
+         parentIpIds: [parentIpAddress],
+         licenseTermsIds: [selectedLicenseId]
+       },
+       ipMetadata: {
+         ipMetadataURI: ipfsUrl,
+         ipMetadataHash: "0x...",
+         nftMetadataURI: nftIpfsUrl,
+         nftMetadataHash: "0x..."
+       }
+     })
+     ```
+   - Links derivative to parent IP asset
+   - Attaches selected license terms
+   - Mints NFT representing derivative rights
+
+7. **Database Storage** (`app/api/story/store-derivative/route.ts`)
+   - Stores derivative information in Supabase `derivatives` table:
+     - `owner_address`: User who minted the derivative
+     - `parent_asset_id`: Original marketplace asset ID
+     - `parent_ip_id`: Parent IP asset address
+     - `derivative_ip_id`: New derivative IP asset address
+     - `tx_hash`: Blockchain transaction hash
+     - `image_cid`: Image CID reference
+     - `metadata_cid`: Original metadata CID
+     - `ip_metadata_cid`: Derivative IP metadata CID
+     - `nft_metadata_cid`: Derivative NFT metadata CID
+     - `license_terms_id`: License terms ID used
+
+8. **Response**
+   - Returns derivative IP ID and transaction hash
+   - Displays success confirmation with:
+     - Derivative IP ID
+     - Transaction hash (linked to Aeneid explorer)
+     - Link to view derivative on Story Protocol explorer
+
+#### Frontend Components:
+
+**Marketplace Page** (`page.tsx`):
+- Displays grid of marketplace assets
+- Search functionality
+- Asset card with preview and metadata
+- Opens asset modal on click
+
+**Marketplace Modal** (`marketplace-modal.tsx`):
+- Displays full asset details
+- Shows image preview, technical details, and owner information
+- "Use This Asset" button opens derivative minting modal
+
+**Use Asset Modal** (`use-asset-modal.tsx`):
+- License selection interface
+- Metadata generation and IPFS upload
+- Story Protocol transaction handling
+- Success/error state management
+
+**Story Client** (`story-client.ts`):
+- Creates Story Protocol client from MetaMask wallet
+- Handles chain switching to Aeneid network
+- Provides SDK client for derivative registration
+
+#### Configuration:
+
+**Frontend Environment Variables**:
+```bash
+# Story Protocol Configuration
+NEXT_PUBLIC_STORY_RPC_URL=https://aeneid.storyrpc.io
+
+# IPFS Configuration (for metadata uploads)
+NEXT_PUBLIC_PINATA_JWT=...
+# OR
+NEXT_PUBLIC_PINATA_API_KEY=...
+NEXT_PUBLIC_PINATA_SECRET_KEY=...
+```
+
+#### Usage:
+
+**From Marketplace**:
+1. Navigate to `/marketplace`
+2. Browse available assets
+3. Click on an asset to view details
+4. Click "Use This Asset"
+5. Select license type (commercial or non-commercial)
+6. Confirm transaction in MetaMask
+7. View derivative IP asset details
+
+**Prerequisites**:
+- MetaMask wallet connected
+- Wallet switched to Aeneid network (automatic)
+- Sufficient WIP tokens for minting fee (if commercial license)
+- Parent asset must have registered IP asset
+
+**Gas Costs**:
+- Derivative registration: ~0.037 IP (per derivative)
+- Minting fee: Variable (set by asset owner for commercial licenses)
+- Revenue share: Percentage of commercial revenue (paid on use)
+
+**Example Derivative Asset**:
+- [View on Aeneid Explorer](https://aeneid.explorer.story.foundation/ipa/0xc186f49CA5BA3916A030AdBbA6C7C14E6674fcE7)
 
 ---
 
