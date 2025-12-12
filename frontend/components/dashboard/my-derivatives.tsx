@@ -7,7 +7,9 @@ import { getUserDerivatives, type Derivative } from "@/lib/dashboard-api"
 import { getPinataImageUrl, fetchFromPinata } from "@/lib/pinata"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Image as ImageIcon, Loader2, ExternalLink, Calendar, Database, FileJson, Hash, Box, Layers } from "lucide-react"
+import { Image as ImageIcon, Loader2, ExternalLink, Calendar, Database, FileJson, Hash, Box, Layers, DollarSign, CheckCircle2, AlertCircle } from "lucide-react"
+import { createStoryClientFromWallet } from "@/lib/story-client"
+import { claimRevenueForIp } from "@/lib/royalty-utils"
 
 function DerivativeCard({ derivative, onClick, index }: { derivative: Derivative; onClick: () => void; index: number }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
@@ -84,10 +86,13 @@ function DerivativeModal({
   isOpen: boolean
   onClose: () => void
 }) {
+  const { account } = useWallet()
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [metadata, setMetadata] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [metadataLoading, setMetadataLoading] = useState(false)
+  const [claimingRevenue, setClaimingRevenue] = useState(false)
+  const [claimResult, setClaimResult] = useState<{ success: boolean; message: string; txHash?: string } | null>(null)
 
   useEffect(() => {
     if (!derivative || !isOpen) return
@@ -121,6 +126,31 @@ function DerivativeModal({
 
     loadData()
   }, [derivative, isOpen])
+
+  const handleClaimRevenue = async () => {
+    if (!derivative?.derivative_ip_id || !account) return
+
+    setClaimingRevenue(true)
+    setClaimResult(null)
+
+    try {
+      const client = await createStoryClientFromWallet()
+      const result = await claimRevenueForIp(client, derivative.derivative_ip_id)
+      
+      setClaimResult({
+        success: true,
+        message: `Successfully claimed revenue!`,
+        txHash: result.txHash,
+      })
+    } catch (error: any) {
+      setClaimResult({
+        success: false,
+        message: error.message || 'Failed to claim revenue',
+      })
+    } finally {
+      setClaimingRevenue(false)
+    }
+  }
 
   if (!derivative) return null
 
@@ -274,6 +304,68 @@ function DerivativeModal({
                 )}
               </div>
             </div>
+
+            {/* Claim Revenue Section */}
+            {derivative.derivative_ip_id && account && (
+              <div className="space-y-4">
+                <h4 className="font-inter text-base uppercase tracking-wider text-white/50 mb-4 flex items-center gap-2 font-medium">
+                  <DollarSign className="size-4" />
+                  Revenue
+                </h4>
+                <div className="space-y-3">
+                  <button
+                    onClick={handleClaimRevenue}
+                    disabled={claimingRevenue}
+                    className="w-full px-4 py-3 rounded-lg font-inter text-sm font-medium text-white bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                  >
+                    {claimingRevenue ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        <span>Claiming Revenue...</span>
+                      </>
+                    ) : (
+                      <>
+                        <DollarSign className="size-4" />
+                        <span>Claim All Revenue</span>
+                      </>
+                    )}
+                  </button>
+                  
+                  {claimResult && (
+                    <div className={`rounded-lg border p-3 ${
+                      claimResult.success 
+                        ? 'border-green-500/30 bg-green-500/10' 
+                        : 'border-red-500/30 bg-red-500/10'
+                    }`}>
+                      <div className="flex items-start gap-2">
+                        {claimResult.success ? (
+                          <CheckCircle2 className="size-4 text-green-400 mt-0.5 shrink-0" />
+                        ) : (
+                          <AlertCircle className="size-4 text-red-400 mt-0.5 shrink-0" />
+                        )}
+                        <div className="flex-1">
+                          <p className={`font-inter text-sm ${
+                            claimResult.success ? 'text-green-400' : 'text-red-400'
+                          }`}>
+                            {claimResult.message}
+                          </p>
+                          {claimResult.txHash && (
+                            <a
+                              href={`https://aeneid.storyscan.io/tx/${claimResult.txHash}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="font-mono text-xs text-blue-400 hover:text-blue-300 mt-1 block"
+                            >
+                              View Transaction <ExternalLink className="size-3 inline ml-1" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Metadata JSON Accordion */}
             {(metadata || metadataLoading) && (

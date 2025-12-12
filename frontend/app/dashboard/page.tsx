@@ -23,9 +23,10 @@ import { MyDetails } from "@/components/dashboard/my-details"
 import { MyDevices } from "@/components/dashboard/my-devices"
 import { MyAssets } from "@/components/dashboard/my-assets"
 import { MyDerivatives } from "@/components/dashboard/my-derivatives"
-import { User, Package, Image as ImageIcon, LogOut, Home, Layers } from "lucide-react"
+import { ClaimHistory } from "@/components/dashboard/claim-history"
+import { User, Package, Image as ImageIcon, LogOut, Home, Layers, DollarSign } from "lucide-react"
 
-type DashboardView = "details" | "devices" | "assets" | "derivatives"
+type DashboardView = "details" | "devices" | "assets" | "derivatives" | "claims"
 
 export default function DashboardPage() {
   const { isConnected, disconnectWallet } = useWallet()
@@ -35,7 +36,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const view = searchParams.get("view") || searchParams.get("tab")
-    if (view && ["details", "devices", "assets", "derivatives"].includes(view)) {
+    if (view && ["details", "devices", "assets", "derivatives", "claims"].includes(view)) {
       setCurrentView(view as DashboardView)
     }
   }, [searchParams])
@@ -122,6 +123,17 @@ export default function DashboardPage() {
                       <span className="font-inter text-sm font-medium tracking-wide group-data-[collapsible=icon]:hidden">My Derivatives</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+                  <SidebarMenuItem className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+                    <SidebarMenuButton
+                      onClick={() => handleViewChange("claims")}
+                      isActive={currentView === "claims"}
+                      tooltip="Claim History"
+                      className="text-white/70 hover:text-white hover:bg-white/5 data-[active=true]:bg-white/10 data-[active=true]:text-white h-10 px-3 rounded-lg transition-all duration-200 group-data-[collapsible=icon]:!h-10 group-data-[collapsible=icon]:!w-10 group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!items-center"
+                    >
+                      <DollarSign className="size-4 group-data-[collapsible=icon]:!size-5 group-data-[collapsible=icon]:!m-0" />
+                      <span className="font-inter text-sm font-medium tracking-wide group-data-[collapsible=icon]:hidden">Claim History</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
@@ -158,6 +170,7 @@ export default function DashboardPage() {
             {currentView === "devices" && <MyDevices />}
             {currentView === "assets" && <MyAssets />}
             {currentView === "derivatives" && <MyDerivatives />}
+            {currentView === "claims" && <ClaimHistory />}
           </div>
         </SidebarInset>
       </div>
